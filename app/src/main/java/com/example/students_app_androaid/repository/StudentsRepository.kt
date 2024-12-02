@@ -26,4 +26,9 @@ object StudentsRepository {
     fun getStudentById(studentId: Int): Student? {
         return students.find { it.id == studentId }
     }
+
+    fun updateStudentCheckedStatus(studentId: Int, isChecked: Boolean) {
+        val student = getStudentById(studentId)
+        student?.isChecked = isChecked
+    }
 }

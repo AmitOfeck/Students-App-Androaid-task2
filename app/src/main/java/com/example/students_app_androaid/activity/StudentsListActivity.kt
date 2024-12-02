@@ -16,6 +16,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import com.example.students_app_androaid.StudentAdapter
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 
 class StudentsListActivity : ComponentActivity() {
@@ -40,14 +42,16 @@ fun StudentsListScreen(students: List<Student>) {
 
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             items(students.size) { index ->
-                StudentItem(student = students[index])
+                StudentItem(student = students[index]) { checked ->
+                    students[index].isChecked = checked
+                }
             }
         }
     }
 }
 
 @Composable
-fun StudentItem(student: Student) {
+fun StudentItem(student: Student, onCheckedChange: (Boolean) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -61,16 +65,23 @@ fun StudentItem(student: Student) {
             Text(text = "Name: ${student.name}")
             Text(text = "ID: ${student.id}")
         }
+
+        Checkbox(
+            checked = student.isChecked,
+            onCheckedChange = { checked ->
+                onCheckedChange(checked)
+            }
+        )
     }
 }
 
 fun getSampleStudents(): List<Student> {
     return listOf(
-        Student(id = 1, name = "eran levi"),
-        Student(id = 2, name = "dana levi"),
-        Student(id = 3, name = "dani dean"),
-        Student(id = 4, name = "adi barak"),
-        Student(id = 5, name = "shai shai")
+        Student(id = 1, name = "eran levi", isChecked = false),
+        Student(id = 2, name = "dana levi", isChecked = false),
+        Student(id = 3, name = "dani dean", isChecked = false),
+        Student(id = 4, name = "adi barak", isChecked = false),
+        Student(id = 5, name = "shai shai", isChecked = false)
     )
 }
 
