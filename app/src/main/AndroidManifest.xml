@@ -13,7 +13,7 @@
         android:theme="@style/Theme.StudentsAppAndroaid"
         tools:targetApi="31">
         <activity
-            android:name=".StudentsListActivity"
+            android:name=".activity.StudentsListActivity"
             android:exported="false"
             android:label="@string/title_activity_students_list"
             android:theme="@style/Theme.StudentsAppAndroaid" />

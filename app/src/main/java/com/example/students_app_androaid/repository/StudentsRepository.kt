@@ -1,4 +1,6 @@
-package com.example.students_app_androaid
+package com.example.students_app_androaid.repository
+
+import com.example.students_app_androaid.model.Student
 
 object StudentsRepository {
 
@@ -17,11 +19,11 @@ object StudentsRepository {
         }
     }
 
-    fun deleteStudent(studentId: String) {
+    fun deleteStudent(studentId: Int) {
         students.removeIf { it.id == studentId }
     }
 
-    fun getStudentById(studentId: String): Student? {
+    fun getStudentById(studentId: Int): Student? {
         return students.find { it.id == studentId }
     }
 }
