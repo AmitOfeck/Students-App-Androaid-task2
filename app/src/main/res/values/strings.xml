@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Students-App-Androaid</string>
+    <string name="title_activity_students_list">StudentsListActivity</string>
 </resources>
