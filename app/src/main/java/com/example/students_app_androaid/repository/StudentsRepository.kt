@@ -29,6 +29,8 @@ object StudentsRepository {
 
     fun updateStudentCheckedStatus(studentId: Int, isChecked: Boolean) {
         val student = getStudentById(studentId)
-        student?.isChecked = isChecked
+        if (student != null) {
+            student.isChecked = isChecked
+        }
     }
 }

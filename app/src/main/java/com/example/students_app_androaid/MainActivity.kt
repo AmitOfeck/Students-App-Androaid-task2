@@ -3,45 +3,27 @@ package com.example.students_app_androaid
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.example.students_app_androaid.ui.theme.StudentsAppAndroaidTheme
+import androidx.compose.material3.*
+import com.example.students_app_androaid.activity.StudentsListScreen
+import com.example.students_app_androaid.activity.getSampleStudents
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
-            StudentsAppAndroaidTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+            val lightColorScheme = lightColorScheme(
+                primary = MaterialTheme.colorScheme.primary,
+                secondary = MaterialTheme.colorScheme.secondary
+            )
+            MaterialTheme(
+                colorScheme = lightColorScheme,
+                content = {
+                    val studentsList = getSampleStudents()
+                    StudentsListScreen(students = studentsList)
                 }
-            }
+            )
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    StudentsAppAndroaidTheme {
-        Greeting("Android")
     }
 }
