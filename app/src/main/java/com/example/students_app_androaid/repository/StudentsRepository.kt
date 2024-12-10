@@ -4,27 +4,33 @@ import com.example.students_app_androaid.model.Student
 
 object StudentsRepository {
 
-    private val students = mutableListOf<Student>()
+    private val studentsList = mutableListOf<Student>(
+        Student(id = 1, name = "eran levi", isChecked = false),
+        Student(id = 2, name = "dana levi", isChecked = true),
+        Student(id = 3, name = "dani dean", isChecked = false),
+        Student(id = 4, name = "adi barak", isChecked = false),
+        Student(id = 5, name = "shai shai", isChecked = false)
+    )
 
-    fun getAllStudents(): List<Student> = students
+    fun getAllStudents(): List<Student> = studentsList
 
     fun addStudent(student: Student) {
-        students.add(student)
+        studentsList.add(student)
     }
 
     fun updateStudent(updatedStudent: Student) {
-        val index = students.indexOfFirst { it.id == updatedStudent.id }
+        val index = studentsList.indexOfFirst { it.id == updatedStudent.id }
         if (index != -1) {
-            students[index] = updatedStudent
+            studentsList[index] = updatedStudent
         }
     }
 
     fun deleteStudent(studentId: Int) {
-        students.removeIf { it.id == studentId }
+        studentsList.removeIf { it.id == studentId }
     }
 
     fun getStudentById(studentId: Int): Student? {
-        return students.find { it.id == studentId }
+        return studentsList.find { it.id == studentId }
     }
 
     fun updateStudentCheckedStatus(studentId: Int, isChecked: Boolean) {

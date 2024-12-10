@@ -55,20 +55,10 @@ fun StudentItem(student: Student, onCheckedChange: (Boolean) -> Unit) {
     }
 }
 
-fun getSampleStudents(): List<Student> {
-    return listOf(
-        Student(id = 1, name = "eran levi", isChecked = false),
-        Student(id = 2, name = "dana levi", isChecked = false),
-        Student(id = 3, name = "dani dean", isChecked = false),
-        Student(id = 4, name = "adi barak", isChecked = false),
-        Student(id = 5, name = "shai shai", isChecked = false)
-    )
-}
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewStudentsListScreen() {
     StudentsAppAndroaidTheme {
-        StudentsListScreen(students = getSampleStudents())
+        StudentsListScreen(students = StudentsRepository.getAllStudents())
     }
 }
