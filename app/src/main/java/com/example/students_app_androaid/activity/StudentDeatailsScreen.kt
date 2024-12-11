@@ -15,7 +15,7 @@ class StudentDetailsActivity : ComponentActivity() {
 
         setContent {
             StudentsAppAndroaidTheme {
-                Text("Details for Student ID: $studentId")
+                Text("Details for Student ID: $studentId")//
             }
         }
     }
