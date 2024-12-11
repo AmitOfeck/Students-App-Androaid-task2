@@ -24,7 +24,6 @@ import androidx.compose.ui.platform.LocalContext
 
 @Composable
 fun StudentsListScreen(students: List<Student>, context: Context) {
-    // using state to save students
     val studentsState = remember { mutableStateOf(students.toMutableList()) }
 
     Surface(
@@ -66,10 +65,9 @@ fun StudentItem(student: Student, onCheckedChange: (Boolean) -> Unit, context: C
             .fillMaxWidth()
             .padding(16.dp)
             .clickable {
-                // יצירת Intent עבור מעבר למסך פרטי הסטודנט
                 val intent = Intent(context, StudentDetailsActivity::class.java)
-                intent.putExtra("studentId", student.id.toString()) // שליחת ה-ID של הסטודנט
-                context.startActivity(intent) // התחלת הפעולה עם ה-Intent
+                intent.putExtra("studentId", student.id)
+                context.startActivity(intent)
             },
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -94,6 +92,7 @@ fun StudentItem(student: Student, onCheckedChange: (Boolean) -> Unit, context: C
         )
     }
 }
+
 
 
 @Preview(showBackground = true)
