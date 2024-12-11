@@ -3,14 +3,19 @@ package com.example.students_app_androaid.activity
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.students_app_androaid.model.Student
 import com.example.students_app_androaid.repository.StudentsRepository
 import com.example.students_app_androaid.ui.theme.StudentsAppAndroaidTheme
-import androidx.compose.runtime.Composable
 
 
 class StudentDetailsActivity : ComponentActivity() {
@@ -37,15 +42,39 @@ fun StudentDetailsScreen(student: Student) {
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
-    ){
-    Column(modifier = Modifier.padding(16.dp)) {
-        Text(text = "Student Details", style = MaterialTheme.typography.headlineMedium)
-        Spacer(modifier = Modifier.height(16.dp))
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            // כותרת
+            Text(text = "Student Details", style = MaterialTheme.typography.headlineMedium)
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Text(text = "Name: ${student.name}")
-        Text(text = "Phone: ${student.phone}")
-        Text(text = "Address: ${student.address}")
-        Text(text = "ID: ${student.id}")
-         }
+            // הצגת התמונה של הסטודנט
+            Image(
+                painter = painterResource(id = com.example.students_app_androaid.R.drawable.ic_student_pic),
+                contentDescription = "Student Image",
+                modifier = Modifier
+                    .size(100.dp) // אפשר לשנות את הגודל כאן
+                    .align(Alignment.CenterHorizontally)
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // פרטי הסטודנט
+            Text(text = "Name: ${student.name}")
+            Text(text = "Phone: ${student.phone}")
+            Text(text = "Address: ${student.address}")
+            Text(text = "ID: ${student.id}")
+
+            // הצגת Checkbox אם הסטודנט הגיע
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(text = "Arrived: ")
+                Checkbox(
+                    checked = student.isChecked,
+                    onCheckedChange = { /* אפשר להוסיף פעולה לשינוי ה-Checkbox אם צריך */ }
+                )
+            }
+        }
     }
 }
