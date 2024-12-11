@@ -11,10 +11,15 @@ import com.example.students_app_androaid.model.Student
 import com.example.students_app_androaid.repository.StudentsRepository
 import com.example.students_app_androaid.ui.theme.StudentsAppAndroaidTheme
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableStateOf
 
 
 @Composable
 fun StudentsListScreen(students: List<Student>) {
+    // using state to save students
+    val studentsState = remember { mutableStateOf(students.toMutableList()) }
+
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
@@ -27,15 +32,25 @@ fun StudentsListScreen(students: List<Student>) {
             )
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(students.size) { index ->
-                    StudentItem(student = students[index]) { checked ->
-                        StudentsRepository.updateStudentCheckedStatus(students[index].id, checked)
+                items(studentsState.value.size) { index ->
+                    StudentItem(student = studentsState.value[index]) { checked ->
+                        // update students after click
+                        val updatedStudent = studentsState.value[index].copy(isChecked = checked)
+                        StudentsRepository.updateStudent(updatedStudent)
+
+                        // update students list after change
+                        val updatedStudents = studentsState.value.toMutableList()
+                        updatedStudents[index] = updatedStudent
+                        studentsState.value = updatedStudents
                     }
                 }
             }
         }
     }
 }
+
+
+
 
 
 @Composable
