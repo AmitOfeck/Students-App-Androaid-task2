@@ -15,22 +15,28 @@ import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun StudentsListScreen(students: List<Student>) {
-    Column(modifier = Modifier.fillMaxSize()) {
-        Text(
-            text = "Students List",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(16.dp)
-        )
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        Column(modifier = Modifier.fillMaxSize()) {
+            Text(
+                text = "Students List",
+                style = MaterialTheme.typography.headlineMedium,
+                modifier = Modifier.padding(16.dp)
+            )
 
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(students.size) { index ->
-                StudentItem(student = students[index]) { checked ->
-                    StudentsRepository.updateStudentCheckedStatus(students[index].id, checked)
+            LazyColumn(modifier = Modifier.fillMaxSize()) {
+                items(students.size) { index ->
+                    StudentItem(student = students[index]) { checked ->
+                        StudentsRepository.updateStudentCheckedStatus(students[index].id, checked)
+                    }
                 }
             }
         }
     }
 }
+
 
 @Composable
 fun StudentItem(student: Student, onCheckedChange: (Boolean) -> Unit) {
