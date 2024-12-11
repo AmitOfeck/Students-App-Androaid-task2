@@ -5,11 +5,11 @@ import com.example.students_app_androaid.model.Student
 object StudentsRepository {
 
     private val studentsList = mutableListOf<Student>(
-        Student(id = 1, name = "eran levi", isChecked = false),
-        Student(id = 2, name = "dana levi", isChecked = true),
-        Student(id = 3, name = "dani dean", isChecked = false),
-        Student(id = 4, name = "adi barak", isChecked = false),
-        Student(id = 5, name = "shai shai", isChecked = false)
+        Student(id = 1, name = "eran levi", isChecked = false, phone = "050-1234567", address = "Tel Aviv"),
+        Student(id = 2, name = "dana levi", isChecked = true, phone = "052-2345678", address = "Haifa"),
+        Student(id = 3, name = "dani dean", isChecked = false, phone = "053-3456789", address = "Jerusalem"),
+        Student(id = 4, name = "adi barak", isChecked = false, phone = "054-4567890", address = "Eilat"),
+        Student(id = 5, name = "shai shai", isChecked = false, phone = "055-5678901", address = "Beer Sheva")
     )
 
     fun getAllStudents(): List<Student> = studentsList
