@@ -34,6 +34,10 @@ class StudentDetailsActivity : ComponentActivity() {
 
 @Composable
 fun StudentDetailsScreen(student: Student) {
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
+    ){
     Column(modifier = Modifier.padding(16.dp)) {
         Text(text = "Student Details", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(16.dp))
@@ -42,5 +46,6 @@ fun StudentDetailsScreen(student: Student) {
         Text(text = "Phone: ${student.phone}")
         Text(text = "Address: ${student.address}")
         Text(text = "ID: ${student.id}")
+         }
     }
 }
