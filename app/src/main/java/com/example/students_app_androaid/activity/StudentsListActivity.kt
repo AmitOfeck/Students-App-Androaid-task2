@@ -13,6 +13,10 @@ import com.example.students_app_androaid.ui.theme.StudentsAppAndroaidTheme
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.foundation.Image
+import androidx.compose.ui.res.painterResource
+import com.example.students_app_androaid.R
+
 
 
 @Composable
@@ -62,6 +66,13 @@ fun StudentItem(student: Student, onCheckedChange: (Boolean) -> Unit) {
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
+
+        Image(
+            painter = painterResource(id = R.drawable.ic_student_pic),
+            contentDescription = "Student Pic",
+            modifier = Modifier.size(50.dp)
+        )
+
         Column {
             Text(text = "Name: ${student.name}")
             Text(text = "ID: ${student.id}")
