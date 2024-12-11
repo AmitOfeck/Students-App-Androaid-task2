@@ -1,5 +1,7 @@
 package com.example.students_app_androaid.activity
 
+import android.content.Intent
+import android.os.Bundle
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.*
@@ -16,11 +18,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.foundation.Image
 import androidx.compose.ui.res.painterResource
 import com.example.students_app_androaid.R
-
-
+import android.content.Context
+import androidx.compose.foundation.clickable
+import androidx.compose.ui.platform.LocalContext
 
 @Composable
-fun StudentsListScreen(students: List<Student>) {
+fun StudentsListScreen(students: List<Student>, context: Context) {
     // using state to save students
     val studentsState = remember { mutableStateOf(students.toMutableList()) }
 
@@ -37,16 +40,18 @@ fun StudentsListScreen(students: List<Student>) {
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
                 items(studentsState.value.size) { index ->
-                    StudentItem(student = studentsState.value[index]) { checked ->
-                        // update students after click
-                        val updatedStudent = studentsState.value[index].copy(isChecked = checked)
-                        StudentsRepository.updateStudent(updatedStudent)
+                    StudentItem(
+                        student = studentsState.value[index],
+                        onCheckedChange = { checked ->
+                            val updatedStudent = studentsState.value[index].copy(isChecked = checked)
+                            StudentsRepository.updateStudent(updatedStudent)
 
-                        // update students list after change
-                        val updatedStudents = studentsState.value.toMutableList()
-                        updatedStudents[index] = updatedStudent
-                        studentsState.value = updatedStudents
-                    }
+                            val updatedStudents = studentsState.value.toMutableList()
+                            updatedStudents[index] = updatedStudent
+                            studentsState.value = updatedStudents
+                        },
+                        context = context
+                    )
                 }
             }
         }
@@ -54,15 +59,18 @@ fun StudentsListScreen(students: List<Student>) {
 }
 
 
-
-
-
 @Composable
-fun StudentItem(student: Student, onCheckedChange: (Boolean) -> Unit) {
+fun StudentItem(student: Student, onCheckedChange: (Boolean) -> Unit, context: Context) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp),
+            .padding(16.dp)
+            .clickable {
+                // יצירת Intent עבור מעבר למסך פרטי הסטודנט
+                val intent = Intent(context, StudentDetailsActivity::class.java)
+                intent.putExtra("studentId", student.id.toString()) // שליחת ה-ID של הסטודנט
+                context.startActivity(intent) // התחלת הפעולה עם ה-Intent
+            },
         horizontalArrangement = Arrangement.spacedBy(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -87,10 +95,11 @@ fun StudentItem(student: Student, onCheckedChange: (Boolean) -> Unit) {
     }
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun PreviewStudentsListScreen() {
     StudentsAppAndroaidTheme {
-        StudentsListScreen(students = StudentsRepository.getAllStudents())
+        StudentsListScreen(students = StudentsRepository.getAllStudents(), context = LocalContext.current)
     }
 }
