@@ -44,27 +44,23 @@ fun StudentDetailsScreen(student: Student) {
         color = MaterialTheme.colorScheme.background
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
-            // כותרת
             Text(text = "Student Details", style = MaterialTheme.typography.headlineMedium)
             Spacer(modifier = Modifier.height(16.dp))
 
-            // הצגת התמונה של הסטודנט
             Image(
                 painter = painterResource(id = com.example.students_app_androaid.R.drawable.ic_student_pic),
                 contentDescription = "Student Image",
                 modifier = Modifier
-                    .size(100.dp) // אפשר לשנות את הגודל כאן
+                    .size(100.dp)
                     .align(Alignment.CenterHorizontally)
             )
             Spacer(modifier = Modifier.height(16.dp))
 
-            // פרטי הסטודנט
             Text(text = "Name: ${student.name}")
             Text(text = "Phone: ${student.phone}")
             Text(text = "Address: ${student.address}")
             Text(text = "ID: ${student.id}")
 
-            // הצגת Checkbox אם הסטודנט הגיע
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
