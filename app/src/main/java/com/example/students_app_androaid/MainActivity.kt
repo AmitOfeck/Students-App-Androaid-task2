@@ -13,10 +13,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            val context = LocalContext.current
-
             StudentsAppAndroaidTheme {
-                StudentsListScreen(students = StudentsRepository.getAllStudents(), context = context)
+                StudentsListScreen(students = StudentsRepository.getAllStudents())
             }
         }
     }
