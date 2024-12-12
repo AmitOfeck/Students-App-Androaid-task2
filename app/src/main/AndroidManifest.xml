@@ -29,5 +29,10 @@
             android:exported="true">
         </activity>
 
+        <activity
+            android:name=".activity.StudentsListActivity"
+            android:exported="true">
+        </activity>
+
     </application>
 </manifest>

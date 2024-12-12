@@ -106,8 +106,7 @@ fun EditStudentScreen(student: Student) {
                     StudentsRepository.updateStudent(updatedStudent)
                     Toast.makeText(context, "Student updated successfully", Toast.LENGTH_SHORT).show()
 
-                    val intent = Intent(context, StudentDetailsActivity::class.java)
-                    intent.putExtra("studentId", updatedStudent.id)
+                    val intent = Intent(context, StudentsListActivity::class.java)
                     context.startActivity(intent)
                     (context as? ComponentActivity)?.finish()
                 },
@@ -124,7 +123,7 @@ fun EditStudentScreen(student: Student) {
                 StudentsRepository.deleteStudent(student.id)
                 Toast.makeText(context, "Student deleted", Toast.LENGTH_SHORT).show()
 
-                val intent = Intent(context, MainActivity::class.java)
+                val intent = Intent(context, StudentsListActivity::class.java)
                 context.startActivity(intent)
                 (context as? ComponentActivity)?.finish()
             },
@@ -134,3 +133,4 @@ fun EditStudentScreen(student: Student) {
         }
     }
 }
+

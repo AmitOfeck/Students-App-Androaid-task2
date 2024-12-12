@@ -21,10 +21,35 @@ import com.example.students_app_androaid.R
 import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.DisposableEffect
+
+import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
+import com.example.students_app_androaid.ui.theme.StudentsAppAndroaidTheme
+
+
+
+class StudentsListActivity : ComponentActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContent {
+            StudentsAppAndroaidTheme {
+                StudentsListScreen(students = StudentsRepository.getAllStudents(), context = this)
+            }
+        }
+    }
+}
 
 @Composable
 fun StudentsListScreen(students: List<Student>, context: Context) {
-    val studentsState = remember { mutableStateOf(students.toMutableList()) }
+    // שמירה על מצב הסטודנטים כדי לעדכן את המידע
+    val studentsState = remember { mutableStateOf(students) }
+
+    // שימוש ב DisposableEffect כדי לעדכן את הרשימה כשחוזרים למסך
+    DisposableEffect(Unit) {
+        studentsState.value = students // עדכון עם הרשימה שמועברת
+        onDispose { }
+    }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -45,6 +70,7 @@ fun StudentsListScreen(students: List<Student>, context: Context) {
                             val updatedStudent = studentsState.value[index].copy(isChecked = checked)
                             StudentsRepository.updateStudent(updatedStudent)
 
+                            // עדכון הרשימה
                             val updatedStudents = studentsState.value.toMutableList()
                             updatedStudents[index] = updatedStudent
                             studentsState.value = updatedStudents
@@ -56,6 +82,8 @@ fun StudentsListScreen(students: List<Student>, context: Context) {
         }
     }
 }
+
+
 
 
 @Composable
@@ -93,12 +121,12 @@ fun StudentItem(student: Student, onCheckedChange: (Boolean) -> Unit, context: C
     }
 }
 
-
-
 @Preview(showBackground = true)
 @Composable
 fun PreviewStudentsListScreen() {
+    val students = StudentsRepository.getAllStudents()
+
     StudentsAppAndroaidTheme {
-        StudentsListScreen(students = StudentsRepository.getAllStudents(), context = LocalContext.current)
+        StudentsListScreen(students = students, context = LocalContext.current)
     }
 }
