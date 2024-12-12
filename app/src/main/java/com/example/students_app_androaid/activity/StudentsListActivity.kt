@@ -57,7 +57,7 @@ fun StudentsListScreen(students: List<Student>, context: Context) {
             Text(
                 text = "Students List",
                 style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp)//
             )
 
             LazyColumn(modifier = Modifier.fillMaxSize()) {
