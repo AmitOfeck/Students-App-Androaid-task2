@@ -42,12 +42,10 @@ class StudentsListActivity : ComponentActivity() {
 
 @Composable
 fun StudentsListScreen(students: List<Student>, context: Context) {
-    // שמירה על מצב הסטודנטים כדי לעדכן את המידע
     val studentsState = remember { mutableStateOf(students) }
 
-    // שימוש ב DisposableEffect כדי לעדכן את הרשימה כשחוזרים למסך
     DisposableEffect(Unit) {
-        studentsState.value = students // עדכון עם הרשימה שמועברת
+        studentsState.value = students
         onDispose { }
     }
 
@@ -70,7 +68,6 @@ fun StudentsListScreen(students: List<Student>, context: Context) {
                             val updatedStudent = studentsState.value[index].copy(isChecked = checked)
                             StudentsRepository.updateStudent(updatedStudent)
 
-                            // עדכון הרשימה
                             val updatedStudents = studentsState.value.toMutableList()
                             updatedStudents[index] = updatedStudent
                             studentsState.value = updatedStudents
