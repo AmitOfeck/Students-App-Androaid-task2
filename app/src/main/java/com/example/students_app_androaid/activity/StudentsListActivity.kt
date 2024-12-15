@@ -21,13 +21,16 @@ import com.example.students_app_androaid.R
 import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.runtime.DisposableEffect
+import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.ui.graphics.Color
 
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.example.students_app_androaid.ui.theme.StudentsAppAndroaidTheme
-
-
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 
 class StudentsListActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,37 +46,52 @@ class StudentsListActivity : ComponentActivity() {
 @Composable
 fun StudentsListScreen(students: List<Student>) {
     val studentsState = remember { mutableStateOf(students.toMutableList()) }
+    val context = LocalContext.current
 
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
-        Column(modifier = Modifier.fillMaxSize()) {
-            Text(
-                text = "Students List",
-                style = MaterialTheme.typography.headlineMedium,
-                modifier = Modifier.padding(16.dp)
-            )
+        Box(modifier = Modifier.fillMaxSize()) {
+            Column(modifier = Modifier.fillMaxSize()) {
+                Text(
+                    text = "Students List",
+                    style = MaterialTheme.typography.headlineMedium,
+                    modifier = Modifier.padding(16.dp)
+                )
 
-            LazyColumn(modifier = Modifier.fillMaxSize()) {
-                items(studentsState.value.size) { index ->
-                    StudentItem(student = studentsState.value[index]) { checked ->
-                        val updatedStudent = studentsState.value[index].copy(isChecked = checked)
-                        StudentsRepository.updateStudent(updatedStudent)
+                LazyColumn(modifier = Modifier.fillMaxSize()) {
+                    items(studentsState.value.size) { index ->
+                        StudentItem(student = studentsState.value[index]) { checked ->
+                            val updatedStudent = studentsState.value[index].copy(isChecked = checked)
+                            StudentsRepository.updateStudent(updatedStudent)
 
-                        val updatedStudents = studentsState.value.toMutableList()
-                        updatedStudents[index] = updatedStudent
-                        studentsState.value = updatedStudents
+                            val updatedStudents = studentsState.value.toMutableList()
+                            updatedStudents[index] = updatedStudent
+                            studentsState.value = updatedStudents
+                        }
                     }
                 }
+            }
+
+            FloatingActionButton(
+                onClick = {
+                    val intent = Intent(context, AddStudentActivity::class.java)
+                    context.startActivity(intent)
+                },
+                modifier = Modifier
+                    .padding(16.dp)
+                    .align(Alignment.BottomEnd)
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Add Student",
+                    tint = Color.White
+                )
             }
         }
     }
 }
-
-
-
-
 
 @Composable
 fun StudentItem(student: Student, onCheckedChange: (Boolean) -> Unit) {
@@ -110,7 +128,6 @@ fun StudentItem(student: Student, onCheckedChange: (Boolean) -> Unit) {
         )
     }
 }
-
 
 @Preview(showBackground = true)
 @Composable
