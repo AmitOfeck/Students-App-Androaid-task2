@@ -19,9 +19,16 @@ object StudentsRepository {
     }
 
     fun updateStudent(updatedStudent: Student) {
-        val index = studentsList.indexOfFirst { it.id == updatedStudent.id }
-        if (index != -1) {
-            studentsList[index] = updatedStudent
+        val existingIndex = studentsList.indexOfFirst { it.id == updatedStudent.id }
+
+        if (existingIndex != -1) {
+            studentsList[existingIndex] = updatedStudent
+        } else {
+            val oldIndex = studentsList.indexOfFirst { it.id != updatedStudent.id && it.name == updatedStudent.name }
+            if (oldIndex != -1) {
+                studentsList.removeAt(oldIndex)
+            }
+            studentsList.add(updatedStudent)
         }
     }
 
