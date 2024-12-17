@@ -3,28 +3,14 @@ package com.example.students_app_androaid
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.example.students_app_androaid.databinding.StudentItemBinding
 import com.example.students_app_androaid.model.Student
+import com.example.students_app_androaid.databinding.StudentItemBinding
 
 class StudentAdapter(
     private val students: List<Student>,
-    private val onStudentClick: (Student) -> Unit
+    private val onStudentClick: (Student) -> Unit,
+    private val onCheckedChanged: (Student, Boolean) -> Unit
 ) : RecyclerView.Adapter<StudentAdapter.StudentViewHolder>() {
-
-    inner class StudentViewHolder(private val binding: StudentItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-
-        fun bind(student: Student) {
-            binding.studentName.text = student.name
-            binding.studentId.text = student.id.toString()
-
-            binding.studentPic.setImageResource(R.drawable.ic_student_pic)
-
-            binding.root.setOnClickListener {
-                onStudentClick(student)
-            }
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StudentViewHolder {
         val binding = StudentItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -36,7 +22,20 @@ class StudentAdapter(
         holder.bind(student)
     }
 
-    override fun getItemCount(): Int {
-        return students.size
+    override fun getItemCount(): Int = students.size
+
+    inner class StudentViewHolder(private val binding: StudentItemBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(student: Student) {
+            binding.studentName.text = student.name
+            binding.studentCheckBox.isChecked = student.isChecked
+            binding.studentId.text = student.id.toString()
+            binding.root.setOnClickListener {
+                onStudentClick(student)
+            }
+            binding.studentCheckBox.setOnCheckedChangeListener { _, isChecked ->
+                onCheckedChanged(student, isChecked)
+            }
+        }
     }
 }
+

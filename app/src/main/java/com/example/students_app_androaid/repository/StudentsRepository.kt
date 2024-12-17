@@ -24,7 +24,7 @@ object StudentsRepository {
         if (existingIndex != -1) {
             studentsList[existingIndex] = updatedStudent
         } else {
-            val oldIndex = studentsList.indexOfFirst { it.id != updatedStudent.id && it.name == updatedStudent.name }
+            val oldIndex = studentsList.indexOfFirst { it.name == updatedStudent.name && it.id != updatedStudent.id }
             if (oldIndex != -1) {
                 studentsList.removeAt(oldIndex)
             }
