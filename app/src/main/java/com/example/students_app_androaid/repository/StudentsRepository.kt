@@ -22,7 +22,9 @@ object StudentsRepository {
         val existingIndex = studentsList.indexOfFirst { it.id == updatedStudent.id }
 
         if (existingIndex != -1) {
-            studentsList[existingIndex] = updatedStudent
+            val currentIsChecked = studentsList[existingIndex].isChecked
+
+            studentsList[existingIndex] = updatedStudent.copy(isChecked = currentIsChecked)
         } else {
             val oldIndex = studentsList.indexOfFirst { it.name == updatedStudent.name && it.id != updatedStudent.id }
             if (oldIndex != -1) {
@@ -31,6 +33,7 @@ object StudentsRepository {
             studentsList.add(updatedStudent)
         }
     }
+
 
     fun deleteStudent(studentId: Int) {
         studentsList.removeIf { it.id == studentId }
